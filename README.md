@@ -38,6 +38,7 @@ To run this application locally, follow these steps:
 3. Install dependencies for the backend:
 
    ```bash
+   cd backend
    npm install
    ```
 

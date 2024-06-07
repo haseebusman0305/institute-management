@@ -1,28 +1,26 @@
 ```markdown
 # Institute Management 🎓
 
-Institute Management is a comprehensive web application built using the MERN (MongoDB, Express, React, Node.js) stack, designed to streamline the management of students and operations for a study academy. 📚
+Institute Management is a comprehensive web application built using the MERN (MongoDB, Express, React, Node.js) stack,
+ designed to streamline the management of students and operations for a study academy. 📚
 
 ## Features 🌟
 
 - **Student Management**: Easily add, update, and track student information, including personal details, enrollment status, and academic records. 👨‍🎓
 - **Course Management**: Create, manage, and assign courses to students, with the ability to track course progress and performance. 📚
 - **Attendance Tracking**: Efficiently monitor and record student attendance for each course or session. 🗓️
-
 - **Reporting and Analytics**: Generate detailed reports and visualize key metrics related to student performance, enrollment rates, and revenue. 📊
 - **User Authentication**: Secure access with role-based authentication for administrators, instructors, and students. 🔒
 
-## Getting Started 🚀
+ ## Getting Started 🚀
 
 To run this application locally, follow these steps:
-
 ### Prerequisites 📋
 
-- Node.js (version 14 or later)
-- MongoDB (version 4 or later)
+   - Node.js (version 14 or later)
+   - MongoDB (version 4 or later)
 
-### Installation 🔧
-
+  ### Installation 🔧
 1. Clone the repository:
 
    ```bash

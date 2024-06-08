@@ -1,23 +1,21 @@
-
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
 const verifyToken = async (req, res, next) => {
-    try {
-        const token = req.header('Authorization').replace('Bearer ', '');
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findOne({ _id: decoded.id, 'tokens.token': token });
-
-        if (!user) {
-            throw new Error();
-        }
-
-        req.token = token;
-        req.user = user;
+  
+      const token = req.header('Authorization').replace('Bearer ', '');
+    if (!token) {
+        return res.status(403).json({ message: 'token missing ' });
+      }
+      try {
+         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.decoded = decoded;
         next();
-    } catch (error) {
-        res.status(401).send({ error: 'Please authenticate' });
-    }
-};  
+      } catch (error) {
+    
+        console.error('JWT verification error:', error);
+        res.status(401).json({ message: 'Invalid token' });
+      }
+};
 
 module.exports = verifyToken;

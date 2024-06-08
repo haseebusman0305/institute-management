@@ -20,10 +20,10 @@ app.use('/protected', protectedRoute);
 app.use('/signup', Signup);
 app.use('/login', Login);
 
-app.get('/isLoggedIn', verifyToken, (req, res) => {
-    return res.json(true);
-  });
-  
+  app.get('/isLoggedIn', verifyToken, (req, res) => {
+      return res.json(true);
+    });
+    
 app.get('/', (req, res) => {
     res.send('Hello from Express!');
     }

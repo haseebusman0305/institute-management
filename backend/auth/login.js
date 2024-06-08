@@ -7,6 +7,7 @@ const router = express.Router();
 
 
 router.post('/', async (req, res) => {
+    try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
@@ -16,12 +17,15 @@ router.post('/', async (req, res) => {
     if (!valid) {
         return res.status(401).json({ error: 'Password is incorrect' });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    res.json({ token });
-}   
-);
-router.get("/", function (req, res) {
-    res.send("sign in page ");
-  });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.json({ token: token });
+ 
+} catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' + error.message});
+}
+
+
+} );
 
 module.exports = router;

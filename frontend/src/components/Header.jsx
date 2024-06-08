@@ -1,20 +1,48 @@
 // Navbar.jsx
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import { removeToken } from '../utils/auth';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+       const ApiUrl = import.meta.env.VITE_API_ENDPOINT || "http://localhost:4000";
+      const token = localStorage.getItem('jwt');
+      console.log('Token from local storage:', token);
+      if (token) {
+        const response = await fetch(`${ApiUrl}/isLoggedIn`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        const isLoggedIn = await response.json();
+        console.log('Response from /isLoggedIn:', isLoggedIn);
+        setIsLoggedIn(isLoggedIn);
+      }
+    };
+  
+    checkLoggedIn();
+  }, []);
+  
+  const handleLogout = () => {
+    removeToken();
+    setIsLoggedIn(false);
+    navigate('/');
+  };
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleNavigation = (path) => {
     navigate(path);
-    setIsMenuOpen(false); // Close the menu after navigation
+    setIsMenuOpen(false); 
   };
 
   const menuItems = [
@@ -80,18 +108,29 @@ const Navbar = () => {
                 {item.name}
               </button>
             ))}
-            <button
-              onClick={() => handleNavigation('/login')}
-              className="bg-transparent hover:text-gray-400 py-2 px-4 border border-white rounded"
-            >
-              Login
-            </button>
-            <button
-              onClick={() => handleNavigation('/signup')}
-              className="bg-transparent hover:text-gray-400 py-2 px-4 border border-white rounded"
-            >
-              Sign Up
-            </button>
+       {isLoggedIn ? (  
+          <button
+            onClick={handleLogout}
+            className="hover:text-gray-400"
+          >
+            Logout
+          </button>
+        ) : (
+        <div className="flex items-center space-x-4">
+          <button
+          onClick={() => handleNavigation('/login')}
+          className="bg-transparent hover:text-gray-400 py-2 px-4 border border-white rounded"
+        >
+          Login
+        </button>
+        <button
+          onClick={() => handleNavigation('/signup')}
+          className="bg-transparent hover:text-gray-400 py-2 px-4 border border-white rounded"
+        >
+          Sign Up
+        </button>
+        </div>
+        )}
           </div>
         </div>
       )}

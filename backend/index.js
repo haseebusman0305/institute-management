@@ -6,6 +6,7 @@ const connectDB = require('./db');
 const protectedRoute = require('./routes/protectedRoute');
 const Signup = require('./auth/signup');
 const Login = require('./auth/login');
+const verifyToken = require('./middleware/authMiddleware')
 
 
  const app = express();
@@ -19,6 +20,10 @@ app.use('/protected', protectedRoute);
 app.use('/signup', Signup);
 app.use('/login', Login);
 
+app.get('/isLoggedIn', verifyToken, (req, res) => {
+    return res.json(true);
+  });
+  
 app.get('/', (req, res) => {
     res.send('Hello from Express!');
     }

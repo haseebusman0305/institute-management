@@ -12,15 +12,17 @@ const Login = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+
     const handleSubmit = async (e) => {
-        console.log('Login'+import.meta.env.VITE_API_ENDPOINT)
         e.preventDefault();
         try {
+
             const res = await axios.post(`${ApiUrl}/login`, { email, password });
             setToken(res.data.token);
             setAuth(true);
             setError(null);
             navigate('/');
+            console.log('Login Success'+ res.data.token);
         } catch (error) {
             console.log(error);
             setError('Login failed. Please try again.');
@@ -59,7 +61,7 @@ const Login = () => {
                         type="submit"
                         className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
-                        Login
+                       {}
                     </button>
                 </form>
                 <p className="mt-4 text-sm text-gray-600">
